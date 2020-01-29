@@ -3,8 +3,8 @@
 namespace Dinh0012\Generators\Processor;
 
 use Illuminate\Database\DatabaseManager;
-use Krlove\CodeGenerator\Model\DocBlockModel;
-use Krlove\CodeGenerator\Model\PropertyModel;
+use Dinh0012\CodeGenerator\Model\DocBlockModel;
+use Dinh0012\CodeGenerator\Model\PropertyModel;
 use Dinh0012\Generators\Config;
 use Dinh0012\Generators\Model\EloquentModel;
 use Dinh0012\Generators\TypeRegistry;

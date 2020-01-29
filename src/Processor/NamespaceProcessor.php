@@ -2,7 +2,7 @@
 
 namespace Dinh0012\Generators\Processor;
 
-use Krlove\CodeGenerator\Model\NamespaceModel;
+use Dinh0012\CodeGenerator\Model\NamespaceModel;
 use Dinh0012\Generators\Config;
 use Dinh0012\Generators\Model\EloquentModel;
 

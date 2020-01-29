@@ -2,7 +2,7 @@
 
 namespace Dinh0012\Generators\Model;
 
-use Krlove\CodeGenerator\Model\ClassModel;
+use Dinh0012\CodeGenerator\Model\ClassModel;
 
 /**
  * Class EloquentModel

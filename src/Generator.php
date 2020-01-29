@@ -3,11 +3,11 @@
 namespace Dinh0012\Generators;
 
 use Dinh0012\Generators\Exception\GeneratorException;
-use Krlove\CodeGenerator\Model\ClassModel;
+use Dinh0012\CodeGenerator\Model\ClassModel;
 
 /**
  * Class Generator
- * @package Krlove\Generator
+ * @package Dinh0012\Generator
  */
 class Generator
 {
