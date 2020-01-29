@@ -1,6 +1,6 @@
 <?php
 
-namespace Dinh0012\Generators\Provider;
+namespace Dinh0012\Generators;
 
 use Illuminate\Support\ServiceProvider;
 use Dinh0012\Generators\Commands\Model;
@@ -13,10 +13,11 @@ use Dinh0012\Generators\Processor\NamespaceProcessor;
 use Dinh0012\Generators\Processor\RelationProcessor;
 use Dinh0012\Generators\Processor\TableNameProcessor;
 
-/**
- * Class GeneratorServiceProvider
- * @package Dinh0012\Generators\Provider
+/*
+ *
+ * @author Dinhnv <dinh020304@gmail.com>
  */
+
 class GeneratorsServiceProvider extends ServiceProvider
 {
     const PROCESSOR_TAG = 'eloquent_model_generator.processor';

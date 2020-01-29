@@ -89,16 +89,6 @@ class Model extends Command
     /**
      * @return array
      */
-    protected function getArguments()
-    {
-        return [
-            ['class-name', InputArgument::REQUIRED, 'Model class name'],
-        ];
-    }
-
-    /**
-     * @return array
-     */
     protected function getOptions()
     {
         return [
