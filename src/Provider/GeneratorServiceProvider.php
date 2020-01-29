@@ -3,7 +3,7 @@
 namespace Dinh0012\Generators\Provider;
 
 use Illuminate\Support\ServiceProvider;
-use Dinh0012\Generators\Command\Model;
+use Dinh0012\Generators\Commands\Model;
 use Dinh0012\Generators\EloquentModelBuilder;
 use Dinh0012\Generators\Processor\CustomPrimaryKeyProcessor;
 use Dinh0012\Generators\Processor\CustomPropertyProcessor;

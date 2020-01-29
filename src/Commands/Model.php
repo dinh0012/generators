@@ -1,6 +1,6 @@
 <?php
 
-namespace Dinh0012\Generators\Command;
+namespace Dinh0012\Generators\Commands;
 
 use Illuminate\Config\Repository as AppConfig;
 use Illuminate\Console\Command;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class Model
- * @package Dinh0012\Generators\Command
+ * @package Dinh0012\Generators\Commands
  */
 class Model extends Command
 {
