@@ -70,6 +70,8 @@ class Model extends Command
         $this->doComment('Starting Model Generate Command', true);
         $this->getOptions();
 
+        $this->databaseConnection = strlen($this->options['connection']) <= 0 ? DB::connection()->getDoctrineSchemaManager() :
+            DB::connection($this->options['connection'])->getDoctrineSchemaManager();
         $tables = [];
         $path = $this->options['folder'];
         $modelStub = file_get_contents($this->getStub());
@@ -168,11 +170,7 @@ class Model extends Command
     {
         $this->doComment('Retrieving column information for : '.$tableName);
 
-        if (strlen($this->options['connection']) <= 0) {
-            return DB::select(DB::raw("describe `{$tableName}`"));
-        } else {
-            return DB::connection($this->options['connection'])->select(DB::raw("describe `{$tableName}`"));
-        }
+        return $this->databaseConnection->listTableDetails($tableName);
     }
 
     /**
@@ -332,13 +330,7 @@ class Model extends Command
      */
     public function getAllTables()
     {
-        $tables = [];
-
-        if (strlen($this->options['connection']) <= 0) {
-            $tables = collect(DB::connection()->getDoctrineSchemaManager()->listTableNames())->flatten();
-        } else {
-            $tables = collect(DB::connection()->getDoctrineSchemaManager()->listTableNames())->flatten();
-        }
+        $tables = $this->databaseConnection->listTableNames();
 
         $tables = $tables->map(function ($value, $key) {
             return collect($value)->flatten()[0];
