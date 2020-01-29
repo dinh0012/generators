@@ -330,7 +330,7 @@ class Model extends Command
      */
     public function getAllTables()
     {
-        $tables = $this->databaseConnection->listTableNames();
+        $tables = collect($this->databaseConnection->listTableNames())->flatten();
 
         $tables = $tables->map(function ($value, $key) {
             return collect($value)->flatten()[0];
