@@ -2,7 +2,6 @@
     "name": "dinh0012/generators",
     "description": "This package will generate a Laravel Model based on your database table itself, filling in the required fields automatically.",
     "type": "laravel",
-    "license": "MIT",
     "authors": [
         {
             "name": "Dinh Nguyen",
@@ -15,7 +14,9 @@
             "Dinh0012\\Generators\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "dinh0012/code-generator": "dev-master"
+    },
     "extra": {
         "laravel": {
             "providers": [
