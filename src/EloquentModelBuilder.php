@@ -40,7 +40,6 @@ class EloquentModelBuilder
         $model = new EloquentModel();
 
         $this->prepareProcessors();
-
         foreach ($this->processors as $processor) {
             $processor->process($model, $config);
         }

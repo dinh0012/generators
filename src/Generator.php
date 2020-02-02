@@ -41,10 +41,11 @@ class Generator
     {
         $this->registerUserTypes($config);
 
-        $model   = $this->builder->createModel($config);
+        $model = $this->builder->createModel($config);
         $content = $model->render();
 
         $outputPath = $this->resolveOutputPath($config);
+
         if ($config->get('backup') && file_exists($outputPath)) {
             rename($outputPath, $outputPath . '~');
         }

@@ -8,6 +8,8 @@ use Dinh0012\Generators\Config;
 use Dinh0012\Generators\Generator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use DB;
+use Str;
 
 /**
  * Class Model
@@ -28,7 +30,18 @@ class Model extends Command
     /**
      * @var AppConfig
      */
+
     protected $appConfig;
+
+    /**
+     * @var \Doctrine\DBAL\Schema\AbstractSchemaManager
+     */
+    private $databaseConnection;
+
+    /**
+     * @var Config
+     */
+    private $config;
 
     /**
      * GenerateModelCommand constructor.
@@ -41,6 +54,7 @@ class Model extends Command
 
         $this->generator = $generator;
         $this->appConfig = $appConfig;
+
     }
 
     /**
@@ -48,11 +62,52 @@ class Model extends Command
      */
     public function fire()
     {
-        $config = $this->createConfig();
+        $this->config = $this->createConfig();
+        $config = $this->config;
+        $connection = $config->get('connection');
+        $this->databaseConnection = $connection ? DB::connection($connection)->getDoctrineSchemaManager() :
+            DB::connection()->getDoctrineSchemaManager();
 
-        $model = $this->generator->generateModel($config);
+       $this->generateModel();
 
-        $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
+    }
+
+    private function generateModel()
+    {
+        $config = $this->config;
+        $tableInput = $config->get('table');
+        $singular = $config->get('singular', true);
+        $tables = [];
+        if ($tableInput === '*' || !$tableInput || $tableInput == 'all') {
+            $tables = $this->getAllTables();
+        } else {
+            $tables = explode(',', $tableInput);
+        }
+        foreach ($tables as $table) {
+            $config->set('table', $table);
+            $className = str_replace('"', '', $table);
+            $className = ucfirst(Str::studly($className));
+            if ($singular) {
+                $className = Str::singular($className);
+            }
+
+            $config->set('class_name', $className);
+            $model = $this->generator->generateModel($config);
+            $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
+        }
+    }
+
+    private function getAllTables()
+    {
+        $tables = collect($this->databaseConnection->listTableNames())->flatten();
+
+        $tables = $tables->map(function ($value, $key) {
+            return collect($value)->flatten()[0];
+        })->reject(function ($value, $key) {
+            return $value == 'migrations';
+        });
+
+        return $tables;
     }
 
     /**
@@ -92,7 +147,7 @@ class Model extends Command
     protected function getOptions()
     {
         return [
-            ['table-name', 'tn', InputOption::VALUE_OPTIONAL, 'Name of the table to use', null],
+            ['table', 'tn', InputOption::VALUE_OPTIONAL, 'Name of the table to use', null],
             ['output-path', 'op', InputOption::VALUE_OPTIONAL, 'Directory to store generated model', null],
             ['namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Namespace of the model', null],
             ['base-class-name', 'bc', InputOption::VALUE_OPTIONAL, 'Model parent class', null],

@@ -2,6 +2,7 @@
 
 namespace Dinh0012\Generators;
 
+use Dinh0012\Generators\Processor\RuleProcessor;
 use Illuminate\Support\ServiceProvider;
 use Dinh0012\Generators\Commands\Model;
 use Dinh0012\Generators\EloquentModelBuilder;
@@ -39,6 +40,7 @@ class GeneratorsServiceProvider extends ServiceProvider
             CustomPropertyProcessor::class,
             TableNameProcessor::class,
             CustomPrimaryKeyProcessor::class,
+            RuleProcessor::class,
         ], self::PROCESSOR_TAG);
 
         $this->app->bind(EloquentModelBuilder::class, function ($app) {
